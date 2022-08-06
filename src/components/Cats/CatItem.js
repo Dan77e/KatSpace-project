@@ -1,38 +1,19 @@
-import CatImg from '../../images/Kats Catalogue/cat-1.jpg';
-import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-export const Cat = () =>{
-const navigate = useNavigate();
+export const Cat = ({ cat }) => {
+  let catProps = JSON.parse(JSON.stringify(cat));
 
-  const detailsBtnHandler = () =>{
-    navigate('/details');
-  }
-
-    return (
-      <>
-        <div className="cat-card">
-        <img src={CatImg} alt="Cat Image" />
-        <article>
-          <h3>Sammy</h3>
-          <button onClick={detailsBtnHandler}>Learn more</button>
-        </article>
-      </div>
+  return (
+    <>
       <div className="cat-card">
-        <img src={CatImg} alt="Cat Image" />
+        <img src={catProps.image} alt="Cat Image" />
         <article>
-          <h3>Sammy</h3>
-          <button onClick={detailsBtnHandler}>Learn more</button>
+          <h3>{catProps.name}</h3>
+          <Link id="detail-link" to={`/cats/${cat.id}`}>
+            Learn more
+          </Link>
         </article>
       </div>
-      <div className="cat-card">
-        <img src={CatImg} alt="Cat Image" />
-        <article>
-          <h3>Sammy</h3>
-          <button onClick={detailsBtnHandler}>Learn more</button>
-        </article>
-      </div>
-      
-  
-      </>
-    )
-}
+    </>
+  );
+};

@@ -1,18 +1,72 @@
-import {Link} from 'react-router-dom';
-
+import { Link } from "react-router-dom";
+import Parse from "parse/dist/parse.min.js";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Login = (props) => {
+  const navigate = useNavigate();
+  console.log(Parse.User.username);
 
+  // State variables
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const doUserLogIn = async function (e) {
+    e.preventDefault();
+    // Note that these values come from state variables that we've declared before
+    const usernameValue = username;
+    const passwordValue = password;
+    try {
+      const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
+     
+      // Update state variable holding current user
+      getCurrentUser();
+      navigate("/", {replace: true});
+      return true;
+    } catch (error) {
+      // Error can be caused by wrong parameters or lack of Internet connection
+      alert(`Error! ${error.message}`);
+      return false;
+    }
+  };
+
+
+
+
+  // Function that will return current user and also update current username
+  const getCurrentUser = async function () {
+    const currentUser = await Parse.User.current();
+      // Update state variable holding current user
+      setCurrentUser(currentUser);
+    return currentUser;
+  };
 
   return (
     <form className="login-form" action="submit">
-      <label for="username">Username: </label>
-      <input type="text" minlength="2" maxlength="30" name="username" />
+      <label htmlFor="username">Username: </label>
+      <input
+        type="text"
+        minLength="2"
+        maxLength="30"
+        name="username"
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+      />
 
-      <label for="password">Password: </label>
-      <input type="password" minlength="5" maxlength="30" name="password" />
+      <label htmlFor="password">Password: </label>
+      <input
+        type="password"
+        minLength="5"
+        maxLength="30"
+        name="password"
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+      />
 
-      <button id="login-btn">LOGIN</button>
+      <button id="login-btn" onClick={(e) => doUserLogIn(e)}>
+        LOGIN
+      </button>
       <span id="register-link">
         <p>Don't have an account ?</p>
         <Link to="/register">REGISTER</Link>
