@@ -5,114 +5,208 @@ import { useNavigate } from "react-router-dom";
 export const Post = (props) => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [gender, setGender] = useState("male");
-  const [description, setDescription] = useState("");
-  const [phone, setPhone] = useState("");
-  const [image, setImage] = useState(null);
+  const [values, setValues] = useState({
+    name: "",
+    age: 0.1,
+    gender: "male",
+    description: "",
+    phone: "",
+    image: null,
+    isError: {
+      name: "",
+      age: "",
+      gender: "male",
+      description: "",
+      phone: "",
+      image: null,
+    },
+  });
+
+  // ----------------------------------------------------------------
+  const validPhone = RegExp(/^0+[0-9]{10,10}$/);
+  const formValChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    let isError = { ...values.isError };
+    switch (name) {
+      case "name":
+        isError.name =
+          value.length < 2 ? "Name must be at least two characters long!" : "";
+        break;
+      case "age":
+        isError.age = value <= 40 ? "" : "There is no cat over 40 years old";
+        break;
+      case "description":
+        isError.description =
+          value.length < 20 ? "The post must have a brief description" : "";
+        break;
+      case "phone":
+        isError.phone = validPhone.test(value)
+          ? ""
+          : "Phone must be valid format starting with 0";
+        break;
+
+      default:
+        break;
+    }
+    setValues((oldState) => ({
+      ...oldState,
+      isError: isError,
+      [name]: value,
+    }));
+  };
+
+  const formValid = ({ isError, ...rest }) => {
+    let isValid = false;
+    Object.keys(isError).forEach((val) => {
+      if (val.length > 0) {
+        isValid = false;
+      } else {
+        isValid = true;
+      }
+    });
+    Object.keys(rest).forEach((val) => {
+      if (val === null || val === '' || val > 40) {
+        isValid = false;
+      } else {
+        isValid = true;
+      }
+    });
+    return isValid;
+  };
+
+  // ----------------------------------------------------------------
 
   async function addCat(e) {
     e.preventDefault();
-    if (name != "" && age != 0 && description != "" && phone != "") {
+
+    console.log(values);
+    if (
+      values.name != "" &&
+      values.age != 0 &&
+      values.description != "" &&
+      values.phone != "" &&
+      values.image != null &&
+      formValid(values)
+    ) {
       try {
         // create a new Parse Object instance
         const Cat = new Parse.Object("Cat");
         // define the attributes you want for your Object
-        Cat.set("name", name);
-        Cat.set("age", age);
-        Cat.set("gender", gender);
-        Cat.set("description", description);
-        Cat.set("phone", phone);
-        Cat.set("image", image);
+        Cat.set("name", values.name);
+        Cat.set("age", values.age);
+        Cat.set("gender", values.gender);
+        Cat.set("description", values.description);
+        Cat.set("phone", values.phone);
+        Cat.set("image", values.image);
         Cat.set("owner", await Parse.User.current().get("username"));
         Cat.set("likes", 0);
         Cat.set("likedUsers", []);
-        // save it on Back4App Data Store
+
         await Cat.save();
         alert("Cat successfully posted!");
-        navigate("/cats", { replace: true });
+        navigate("/cats");
         window.location.reload(false); // TODO THIS SHOULD BE A TEMPORARY SOLUTION !!!!
       } catch (error) {
         console.log("Error posting cat: ", error);
       }
     } else {
-      alert("Please fill all fields");
+      alert("Please fill all fields correctly!");
     }
   }
-
-  function handleChange(e) {
-    let imgUrl = URL.createObjectURL(e.target.files[0]);
-    setImage(imgUrl);
-    console.log(e.target.files);
-  }
-
-  console.log(image);
 
   return (
     <form className="post-form" method="post" encType="multipart/form-data">
       <span id="cat-img">
         <h3>Add image:</h3>
-        {/* <img src={image} /> */}
+        <img src={values.image} id="preview-image" />
         <input
-          type="file"
-          name="imgFile"
-          value={image}
-          // onChange={handleChange}
+          placeholder="Image link"
+          type="url"
+          name="image"
+          value={values.image}
+          onChange={formValChange}
         />
       </span>
       <article className="cat-info">
-        <h2>
+        <p>
+          Name:
+          <br />
           <input
+            name="name"
             type="text"
             placeholder="Kittie's name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
+            value={values.name}
+            onChange={formValChange}
           />
-        </h2>
+          {values.isError.name.length > 0 && (
+            <span className="invalid-feedback">{values.isError.name}</span>
+          )}
+        </p>
         <p id="age">
-          Age:{" "}
+          Age (years):
+          <br />
           <input
+            name="age"
             type="number"
-            min="0"
+            min="0.1"
             max="25"
             step="0.1"
-            value={age}
-            onChange={(event) => setAge(event.target.value)}
+            value={values.age}
+            onChange={formValChange}
           />
+          {values.isError.age.length > 0 && (
+            <span className="invalid-feedback">{values.isError.age}</span>
+          )}
         </p>
         <p id="gender">
-          <label htmlFor="gender">Gender: </label>
+          Gender:
+          <br />
           <select
             name="gender"
             id="gender"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
+            value={values.gender}
+            onChange={formValChange}
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="male" name="male">
+              Male
+            </option>
+            <option value="female" name="female">
+              Female
+            </option>
           </select>
         </p>
 
         <p id="description">
           <textarea
+            name="description"
             placeholder="Post description"
             maxLength="696"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
+            value={values.description}
+            onChange={formValChange}
           ></textarea>
+          {values.isError.description.length > 0 && (
+            <span className="invalid-feedback">
+              {values.isError.description}
+            </span>
+          )}
         </p>
         <p id="contact-number">
-          Contact:{" "}
+          Contact:
+          <br />
           <strong>
             <input
+              name="phone"
               type="tel"
-              maxLength="13"
+              maxLength="11"
               placeholder="Phone number"
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
+              value={values.phone}
+              onChange={formValChange}
             />
           </strong>
+          {values.isError.phone.length > 0 && (
+            <span className="invalid-feedback">{values.isError.phone}</span>
+          )}
         </p>
 
         <button id="post-btn" onClick={addCat}>

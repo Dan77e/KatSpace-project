@@ -12,7 +12,7 @@ export const Edit = ({ cats }) => {
     gender: "",
     description: "",
     phone: "",
-    image: "",
+    image: null,
   });
 
   const query = new Parse.Query("Cat");
@@ -38,7 +38,8 @@ export const Edit = ({ cats }) => {
       cat.name != "" &&
       cat.age != 0 &&
       cat.description != "" &&
-      cat.phone != ""
+      cat.phone != "" &&
+      cat.image != null
     ) {
       try {
         const queryCat = new Parse.Query("Cat");
@@ -68,12 +69,12 @@ export const Edit = ({ cats }) => {
     <form className="post-form" method="post" encType="multipart/form-data">
       <span id="cat-img">
         <h3>Add image:</h3>
-        {/* <img src={image} /> */}
+        <img src={cat.image} id="preview-image" />
         <input
           type="file"
           name="image"
           value={cat.image}
-          //   onChange={changeHandler} //TODO Fix the image issue
+          onChange={changeHandler}
         />
       </span>
       <article className="cat-info">

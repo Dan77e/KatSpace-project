@@ -1,15 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const Details = ({ cats }) => {
   const navigate = useNavigate();
+
 
   const catId = Array(window.location.href.split("/"))[0][4];
   let cat;
   let catObject;
   const currentUser = Parse.User.current().get("username");
   let isOwner = false;
+  let [isLiked, setIsLiked] = useState(false);
+  const [likes = cat.likes, setLikes] = useState(0);
+  let hasLiked = false;
 
   // TODO Maybe try to do it with a query and '.get(id)'
   for (const current of cats) {
@@ -21,6 +25,7 @@ export const Details = ({ cats }) => {
 
   if (currentUser === cat.owner) {
     isOwner = true;
+    hasLiked = true;
   }
 
   const editHandler = () => {
@@ -40,29 +45,24 @@ export const Details = ({ cats }) => {
     }
   };
 
-  let [isLiked, setIsLiked] = useState(false);
-  const [likes = cat.likes, setLikes] = useState(0);
-  let hasLiked = false;
-
-
-  const test = async () => {
+  const catIsLiked = async () => {
     cat.likes = cat.likes + 1;
-    // await catObject.set("likes", cat.likes);
+    cat.likedUsers.push(currentUser);
+    await catObject.set("likes", cat.likes);
+    await catObject.set("likedUsers", cat.likedUsers);
     await catObject.save();
   };
 
   const likeHandler = (e) => {
     setLikes((oldLikes) => oldLikes + 1);
-    if (!hasLiked) {
-      hasLiked = false;
-      if(!isOwner){
+    if (!isOwner) {
       setIsLiked(true);
-      }
     }
-    test();
+
+    catIsLiked();
   };
 
-  if (!(cat.likedUsers.includes(currentUser)) && !isLiked){
+  if (cat.likedUsers.includes(currentUser) || isLiked) {
     hasLiked = true;
   }
 
@@ -85,18 +85,14 @@ export const Details = ({ cats }) => {
             <button id="edit-btn" onClick={editHandler}>
               EDIT
             </button>
-            <button>
-              <i className="bi bi-star-fill">&nbsp; {cat.likes}</i>
-            </button>
           </span>
         )}
         {hasLiked ? (
-          <button>
+          <button className="like-btn">
             <i className="bi bi-star-fill">&nbsp; {cat.likes}</i>
           </button>
-        ) :
-         (
-          <button onClick={likeHandler}>
+        ) : (
+          <button className="like-btn" onClick={likeHandler}>
             <i className="bi bi-star">&nbsp; {cat.likes}</i>
           </button>
         )}

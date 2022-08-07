@@ -1,3 +1,25 @@
+.no-cats-container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: 5vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.no-cats-container #sorry-face{
+  font-size: 150px;
+  align-self: center;
+  color: #2b2b2b;
+}
+.no-cats-container #sorry-text{
+  font-size: 70px;
+  color: #2b2b2b;
+}
+
+
 .cats-container {
   display: flex;
   flex-direction: row;
@@ -25,6 +47,10 @@
   font-size: 25px;
   text-align: center;
   margin-top: 6px;
+}
+.cat-card button{
+  background-color: azure;
+  border-style: none;
 }
 
 .cat-card #detail-link {

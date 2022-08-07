@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 export const Register = () => {
   const navigate = useNavigate();
 
-  // State variables
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [repass, setRepass] = useState("");
@@ -18,7 +17,6 @@ export const Register = () => {
 
   const doRegister = async function (e) {
     e.preventDefault();
-    // Note that these values come from state variables that we've declared before
     const usernameValue = username;
     const passwordValue = password;
 

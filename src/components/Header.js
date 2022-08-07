@@ -1,4 +1,3 @@
-import logo from "../images/katspace-logo.jpg";
 import { NavLink } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
 import { useState } from "react";
@@ -34,7 +33,7 @@ export const Header = () => {
   return (
     <header>
       <nav>
-        <img id="logo" src={logo} alt="Logo" />
+        <img id="logo" src="./images/katspace-logo.jpg" alt="Logo" />
         <ul className="nav">
           <NavLink className="nav-link" to="/">
             Home
