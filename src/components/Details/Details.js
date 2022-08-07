@@ -1,40 +1,70 @@
-import { useNavigate, useParams } from "react-router-dom";
-import CatImg from "../../images/Kats Catalogue/cat-1.jpg";
+import { useNavigate } from "react-router-dom";
 import Parse from "parse/dist/parse.min.js";
-import { render } from "@testing-library/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const Details = ({ cats }) => {
   const navigate = useNavigate();
 
   const catId = Array(window.location.href.split("/"))[0][4];
   let cat;
-  let catToDelete;
+  let catObject;
+  const currentUser = Parse.User.current().get("username");
+  let isOwner = false;
 
+  // TODO Maybe try to do it with a query and '.get(id)'
   for (const current of cats) {
     if (current.id == catId) {
       cat = JSON.parse(JSON.stringify(current));
-      catToDelete = current;
+      catObject = current;
     }
   }
 
+  if (currentUser === cat.owner) {
+    isOwner = true;
+  }
 
   const editHandler = () => {
-    navigate("/post");
+    navigate(`/edit/${catId}`);
   };
 
   const deleteHandler = async () => {
-          try{
+    if (window.confirm("Are you sure you want to delete the post ?")) {
+      try {
         //destroy the object
-        let result = await catToDelete.destroy();
-        alert('Cat post deleted with objectId: ' + result.id);
+        await catObject.destroy();
         navigate("/cats");
         window.location.reload(false); // THIS SHOULD BE A TEMPORARY SOLUTION !!!!
-    }catch(error){
-        alert('Failed to delete cat, with error code: ' + error.message);
+      } catch (error) {
+        alert("Failed to delete cat, with error code: " + error.message);
+      }
     }
-
   };
+
+  let [isLiked, setIsLiked] = useState(false);
+  const [likes = cat.likes, setLikes] = useState(0);
+  let hasLiked = false;
+
+
+  const test = async () => {
+    cat.likes = cat.likes + 1;
+    // await catObject.set("likes", cat.likes);
+    await catObject.save();
+  };
+
+  const likeHandler = (e) => {
+    setLikes((oldLikes) => oldLikes + 1);
+    if (!hasLiked) {
+      hasLiked = false;
+      if(!isOwner){
+      setIsLiked(true);
+      }
+    }
+    test();
+  };
+
+  if (!(cat.likedUsers.includes(currentUser)) && !isLiked){
+    hasLiked = true;
+  }
 
   return (
     <section className="details">
@@ -43,20 +73,33 @@ export const Details = ({ cats }) => {
         <h2>This is {cat.name}</h2>
         <p id="age">Age: {cat.age}</p>
         <p id="gender">Gender: {cat.gender}</p>
-        <p id="description">
-         {cat.description}
-        </p>
+        <p id="description">{cat.description}</p>
         <p id="contact-number">
           Contact: <strong>{cat.phone}</strong>
         </p>
-        <span className="details-btns">
-          <button id="remove-btn" onClick={(e) => deleteHandler(e)}>
-            REMOVE
+        {isOwner && (
+          <span className="details-btns">
+            <button id="remove-btn" onClick={(e) => deleteHandler(e)}>
+              REMOVE
+            </button>
+            <button id="edit-btn" onClick={editHandler}>
+              EDIT
+            </button>
+            <button>
+              <i className="bi bi-star-fill">&nbsp; {cat.likes}</i>
+            </button>
+          </span>
+        )}
+        {hasLiked ? (
+          <button>
+            <i className="bi bi-star-fill">&nbsp; {cat.likes}</i>
           </button>
-          <button id="edit-btn" onClick={editHandler}>
-            EDIT
+        ) :
+         (
+          <button onClick={likeHandler}>
+            <i className="bi bi-star">&nbsp; {cat.likes}</i>
           </button>
-        </span>
+        )}
       </article>
     </section>
   );

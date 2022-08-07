@@ -1,0 +1,36 @@
+footer {
+    background-color: rgb(43, 43, 43);
+    color: wheat;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 15vh;
+  }
+  
+  footer .contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    margin-left: 10%;
+  }
+  footer .contacts h4 {
+    margin-bottom: 0;
+  }
+  footer p {
+    font-size: 40px;
+  }
+  footer .socials {
+    font-size: 18px;
+  }
+  footer .socials h4 {
+    margin-bottom: 10px;
+  }
+  
+  footer .contacts {
+    font-size: 18px;
+  }
+  footer .contacts h4 {
+    margin-bottom: 0;
+  }

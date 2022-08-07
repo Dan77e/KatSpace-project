@@ -11,6 +11,7 @@ import { Post } from "./components/Post/Post.js";
 import { Profile } from "./components/Profile/Profile.js";
 import { Pagination } from "./components/Pagination/Pagination.js";
 import { NotFound } from "./components/NotFound.js";
+import { Edit } from "./components/Edit/Edit";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Parse from "parse/dist/parse.min.js";
@@ -26,6 +27,7 @@ Parse.serverURL = PARSE_HOST_URL;
 
 function App() {
   let catQuery = new Parse.Query("Cat");
+  // catQuery.limit(6); //TODO ADD PAGINATION WITH THIS
   const [cats, setCats] = useState([]);
 
   const queryFunc = async () => {
@@ -56,14 +58,20 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route
             path="/cats"
-            element={<Cats cats={cats} posts={currentPosts}>
-              // TODO CREATE PAGINATION
-                    <Pagination postsPerPage={postsPerPage} totalPosts={cats.length} />
-            </Cats>}
+            element={
+              <Cats cats={cats} posts={currentPosts}>
+                // TODO CREATE PAGINATION
+                <Pagination
+                  postsPerPage={postsPerPage}
+                  totalPosts={cats.length}
+                />
+              </Cats>
+            }
           />
           <Route path="/cats/:catId" element={<Details cats={cats} />} />
           <Route path="/post" element={<Post />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/edit/:catId" element={<Edit cats={cats} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

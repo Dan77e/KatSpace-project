@@ -1,0 +1,12 @@
+html {
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  }
+  body {
+    margin: 0;
+  }
+  
+  main {
+    background-color: wheat;
+    min-height: 100vh;
+    position: relative;
+  }

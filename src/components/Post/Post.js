@@ -26,6 +26,8 @@ export const Post = (props) => {
         Cat.set("phone", phone);
         Cat.set("image", image);
         Cat.set("owner", await Parse.User.current().get("username"));
+        Cat.set("likes", 0);
+        Cat.set("likedUsers", []);
         // save it on Back4App Data Store
         await Cat.save();
         alert("Cat successfully posted!");

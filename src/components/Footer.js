@@ -6,6 +6,7 @@ export const Footer = () => {
   const showname = () => {
     name == "" ? setName("@KatSpace") : setName("");
   };
+  
   return (
     <footer>
       <ul className="socials">
