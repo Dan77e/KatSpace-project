@@ -33,9 +33,9 @@ export const Edit = ({ cats }) => {
     }));
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     queryFunc();
-  }, [])
+  }, []);
 
   const validPhone = RegExp(/^0+[0-9]{10,10}$/);
 
@@ -99,7 +99,7 @@ export const Edit = ({ cats }) => {
       values.description != "" &&
       values.phone != "" &&
       values.image != null &&
-      formValid(values)
+      !formValid(values)
     ) {
       try {
         const queryCat = new Parse.Query("Cat");
@@ -121,7 +121,7 @@ export const Edit = ({ cats }) => {
         console.log(error);
       }
     } else {
-      alert("Please fill all fields");
+      alert("Please fill all fields correctly");
     }
   }
 
@@ -218,9 +218,11 @@ export const Edit = ({ cats }) => {
             <span className="invalid-feedback">{values.isError.phone}</span>
           )}
         </p>
-        <button id="post-btn" onClick={updateCat}>
-          UPDATE
-        </button>
+        
+          <button id="post-btn" onClick={updateCat}>
+            UPDATE
+          </button>
+      
       </article>
     </form>
   );

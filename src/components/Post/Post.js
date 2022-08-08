@@ -66,7 +66,7 @@ export const Post = (props) => {
       }
     });
     Object.keys(rest).forEach((val) => {
-      if (val === null || val === '' || val > 40) {
+      if (val === null || val === "" || val > 40) {
         isValid = false;
       } else {
         isValid = true;
@@ -86,7 +86,7 @@ export const Post = (props) => {
       values.description != "" &&
       values.phone != "" &&
       values.image != null &&
-      formValid(values)
+      !formValid(values)
     ) {
       try {
         // create a new Parse Object instance

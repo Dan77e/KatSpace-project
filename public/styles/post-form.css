@@ -77,22 +77,26 @@ textarea {
 
 
 .cat-info #description {
-  width: 80%;
-  height: 22%;
+  min-width: 97%;
+  min-height: 25%;
   text-align: justify;
   font-size: 20px;
   word-wrap: normal;
+  margin-bottom: 0;
 }
 
 .cat-info #description textarea {
-  width: 100%;
-  height: 100%;
+  min-width: 99%;
+  min-height: 70%;
   text-align: justify;
   resize: none;
+  word-break: break-all;
 }
 
 .cat-info #contact-number {
   font-size: 25px;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .cat-info #post-btn {
@@ -105,7 +109,7 @@ textarea {
   font-weight: 600;
   letter-spacing: 1px;
   color: #2b2b2b;
-  margin-top: 0;
+  margin-top: 2%;
   margin-bottom: 0.5%;
 }
 
