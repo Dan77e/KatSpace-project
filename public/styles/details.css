@@ -7,14 +7,14 @@
 }
 .details img {
   width: 40vw;
-  height: 60vh;
+  height: 66vh;
   border-radius: 20px;
 }
 
 .cat-info {
-  background-color: rgb(255, 255, 255);
+  background-color: azure;
   width: 40vw;
-  height: 60vh;
+  height: 66vh;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -33,14 +33,16 @@
 }
 
 .cat-info #description {
-  width: 80%;
-  height: 22%;
+  min-width: 97%;
+  min-height: 30%;
   text-align: justify;
   font-size: 20px;
   word-wrap: normal;
+  word-break: break-all;
 }
 .cat-info #contact-number {
   font-size: 20px;
+  margin-bottom: 0;
 }
 .cat-info .details-btns {
   display: flex;

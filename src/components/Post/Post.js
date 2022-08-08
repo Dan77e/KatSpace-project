@@ -80,7 +80,6 @@ export const Post = (props) => {
   async function addCat(e) {
     e.preventDefault();
 
-    console.log(values);
     if (
       values.name != "" &&
       values.age != 0 &&
