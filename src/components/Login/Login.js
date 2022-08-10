@@ -5,24 +5,20 @@ import { useNavigate } from "react-router-dom";
 
 export const Login = (props) => {
   const navigate = useNavigate();
-  console.log(Parse.User.username);
 
-  // State variables
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
 
   const doUserLogIn = async function (e) {
     e.preventDefault();
-    // Note that these values come from state variables that we've declared before
     const usernameValue = username;
     const passwordValue = password;
     try {
-      const loggedInUser = await Parse.User.logIn(usernameValue, passwordValue);
-     
+      await Parse.User.logIn(usernameValue, passwordValue);
       // Update state variable holding current user
       getCurrentUser();
-      navigate("/", {replace: true});
+      navigate("/", { replace: true });
       return true;
     } catch (error) {
       // Error can be caused by wrong parameters or lack of Internet connection
@@ -31,14 +27,9 @@ export const Login = (props) => {
     }
   };
 
-
-
-
-  // Function that will return current user and also update current username
   const getCurrentUser = async function () {
     const currentUser = await Parse.User.current();
-      // Update state variable holding current user
-      setCurrentUser(currentUser);
+    setCurrentUser(currentUser);
     return currentUser;
   };
 

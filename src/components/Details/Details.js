@@ -35,10 +35,9 @@ export const Details = ({ cats }) => {
   const deleteHandler = async () => {
     if (window.confirm("Are you sure you want to delete the post ?")) {
       try {
-        //destroy the object
         await catObject.destroy();
         navigate("/cats");
-        window.location.reload(false); // THIS SHOULD BE A TEMPORARY SOLUTION !!!!
+        window.location.reload(false);
       } catch (error) {
         alert("Failed to delete cat, with error code: " + error.message);
       }

@@ -12,14 +12,13 @@ export const Edit = ({ cats }) => {
     gender: "male",
     description: "",
     phone: "",
-    image: null,
+    image: "",
     isError: {
       name: "",
       age: "",
-      gender: "male",
       description: "",
       phone: "",
-      image: null,
+      image: "",
     },
   });
 
@@ -61,6 +60,10 @@ export const Edit = ({ cats }) => {
           ? ""
           : "Phone must be valid format starting with 0";
         break;
+      case "image":
+        isError.image =
+          value.length > 10 ? "" : "The post must have an image of the cat";
+        break;
 
       default:
         break;
@@ -73,34 +76,43 @@ export const Edit = ({ cats }) => {
   };
 
   const formValid = ({ isError, ...rest }) => {
-    let isValid = false;
-    Object.keys(isError).forEach((val) => {
-      if (val.length > 0) {
-        isValid = false;
+    let isValid = [];
+    let counter = 0;
+
+    Object.entries(isError).forEach((val) => {
+      if (val[1].length > 0) {
+        isValid.push("invalid");
       } else {
-        isValid = true;
+        isValid.push("valid");
       }
     });
-    Object.keys(rest).forEach((val) => {
-      if (val === null || val === "" || val > 40) {
-        isValid = false;
+console.log(JSON.parse)
+    Object.entries(rest).forEach((val) => {
+      console.log(counter);
+      console.log(val[1]);
+      if(counter < 6){
+      if (val[1].length < 1 || val[1] < 0) {
+        isValid.push("invalid");
       } else {
-        isValid = true;
+        isValid.push("valid");
       }
+    }
+    counter++;
     });
-    return isValid;
+    console.log(counter);
+
+    if (isValid.includes("invalid")) {
+      return false;
+    } else {
+      return true;
+    }
   };
+
+  console.log(formValid(values));
 
   async function updateCat(e) {
     e.preventDefault();
-    if (
-      values.name != "" &&
-      values.age != 0 &&
-      values.description != "" &&
-      values.phone != "" &&
-      values.image != null &&
-      !formValid(values)
-    ) {
+    if (formValid(values)) {
       try {
         const queryCat = new Parse.Query("Cat");
         queryCat.equalTo("objectId", catId);
@@ -137,6 +149,9 @@ export const Edit = ({ cats }) => {
           value={values.image}
           onChange={formValChange}
         />
+        {values.isError.image.length > 0 && (
+          <span className="invalid-feedback">{values.isError.image}</span>
+        )}
       </span>
       <article className="cat-info">
         <p>
@@ -218,11 +233,10 @@ export const Edit = ({ cats }) => {
             <span className="invalid-feedback">{values.isError.phone}</span>
           )}
         </p>
-        
-          <button id="post-btn" onClick={updateCat}>
-            UPDATE
-          </button>
-      
+
+        <button id="post-btn" onClick={updateCat}>
+          UPDATE
+        </button>
       </article>
     </form>
   );

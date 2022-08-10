@@ -1,112 +1,118 @@
 .example-img {
-    width: 260px;
-    height: 260px;
-    padding: 10px;
-    background-color: azure;
+  width: 260px;
+  height: 260px;
+  padding: 10px;
+  background-color: azure;
+}
+
+.examples {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+.examples p {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  top: 70%;
+  left: 0%;
+  transition-property: visibility;
+  transition-delay: 0s;
+}
+#right-side-examples picture,
+#left-side-examples picture:hover {
+  position: relative;
+}
+#left-side-examples picture:hover p {
+  visibility: visible;
+  transition-delay: 0.7s;
+  color: azure;
+  font-size: 40px;
+}
+#right-side-examples picture:hover p {
+  visibility: visible;
+  transition-delay: 0.7s;
+  color: azure;
+  font-size: 30px;
+}
+
+#right-side-examples {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10%;
+  gap: 20px;
+}
+#left-side-examples {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30%;
+  align-items: center;
+  margin-right: 22%;
+  gap: 20px;
+  height: 100vh;
+}
+
+#left-side-examples img {
+  transform: rotate(-15.5deg);
+}
+#right-side-examples img {
+  transform: rotate(15.5deg);
+}
+
+#left-side-examples img:hover,
+#right-side-examples img:hover {
+  transform: scale(1.3);
+  transition: 0.7s;
+  padding: 0;
+}
+
+#home-centre-column {
+  background-color: rgb(43, 43, 43);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  color: azure;
+  height: 70%;
+}
+
+#home-centre-column h2 {
+  margin-top: 0;
+}
+#home-centre-column h1,
+h2 {
+  font-size: 60px;
+}
+#home-centre-column p {
+  width: 69%;
+  font-size: 25px;
+  line-height: 40px;
+  text-align: justify;
+  letter-spacing: 1px;
+}
+
+#home-centre-column h1 {
+  margin-top: 200px;
+}
+
+#home-centre {
+  background-color: rgb(43, 43, 43);
+  width: 600px;
+  height: 100%;
+  position: absolute;
+  left: 33%;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1550px) {
+  #right-side-examples, #left-side-examples {
+    filter: opacity(0);
   }
-  
-  .examples {
-    display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 50px;
-  }
-  .examples p {
-    visibility: hidden;
-    position: absolute;
-    z-index: 1;
-    top: 70%;
-    left: 0%;
-    transition-property: visibility;
-    transition-delay: 0s;
-  }
-  #right-side-examples picture,
-  #left-side-examples picture:hover {
-    position: relative;
-  }
-  #left-side-examples picture:hover p {
-    visibility: visible;
-    transition-delay: 0.7s;
-    color: azure;
-    font-size: 40px;
-  }
-  #right-side-examples picture:hover p {
-    visibility: visible;
-    transition-delay: 0.7s;
-    color: azure;
-    font-size: 30px;
-  }
-  
-  #right-side-examples {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10%;
-    gap: 20px;
-  }
-  #left-side-examples {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 30%;
-    align-items: center;
-    margin-right: 22%;
-    gap: 20px;
-    height: 100vh;
-  }
-  
-  #left-side-examples img {
-    transform: rotate(-15.5deg);
-  }
-  #right-side-examples img {
-    transform: rotate(15.5deg);
-  }
-  
-  #left-side-examples img:hover,
-  #right-side-examples img:hover {
-    transform: scale(1.3);
-    transition: 0.7s;
-    padding: 0;
-  }
-  
-  #home-centre-column {
-    background-color: rgb(43, 43, 43);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    color: azure;
-    height: 70%;
-  }
-  
-  #home-centre-column h2 {
-    margin-top: 0;
-  }
-  #home-centre-column h1,
-  h2 {
-    font-size: 60px;
-  }
-  #home-centre-column p {
-    width: 69%;
-    font-size: 25px;
-    line-height: 40px;
-    text-align: justify;
-    letter-spacing: 1px;
-  }
-  
-  #home-centre-column h1 {
-    margin-top: 200px;
-  }
-  
-  #home-centre {
-    background-color: rgb(43, 43, 43);
-    width: 600px;
-    height: 100%;
-    position: absolute;
-    left: 33%;
-    display: flex;
-    justify-content: center;
-  }
+}

@@ -9,10 +9,8 @@ export const Header = () => {
   const [currentUser, setCurrentUser] = useState(null);
 
   const getCurrentUser = async function () {
-    const currentUser = await Parse.User.current();
-    // Update state variable holding current user
-    setCurrentUser(currentUser);
-    console.log(currentUser);
+    const current = await Parse.User.current();
+    setCurrentUser(current);
     return currentUser;
   };
 
@@ -20,7 +18,6 @@ export const Header = () => {
     e.preventDefault();
     try {
       await Parse.User.logOut();
-      // Update state variable holding current user
       getCurrentUser();
       navigate("/", { replace: true });
       return true;

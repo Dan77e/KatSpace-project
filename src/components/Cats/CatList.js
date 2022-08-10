@@ -1,5 +1,4 @@
 import { Cat } from "./CatItem.js";
-import { useState } from "react";
 
 export const Cats = ({ cats }) => {
   const catsNumber = Object.keys(cats).length;

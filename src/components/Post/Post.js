@@ -11,14 +11,13 @@ export const Post = (props) => {
     gender: "male",
     description: "",
     phone: "",
-    image: null,
+    image: "",
     isError: {
       name: "",
       age: "",
-      gender: "male",
       description: "",
       phone: "",
-      image: null,
+      image: "",
     },
   });
 
@@ -45,6 +44,10 @@ export const Post = (props) => {
           ? ""
           : "Phone must be valid format starting with 0";
         break;
+      case "image":
+        isError.image =
+          value.length > 10 ? "" : "The post must have an image of the cat";
+        break;
 
       default:
         break;
@@ -57,37 +60,36 @@ export const Post = (props) => {
   };
 
   const formValid = ({ isError, ...rest }) => {
-    let isValid = false;
-    Object.keys(isError).forEach((val) => {
-      if (val.length > 0) {
-        isValid = false;
+    let isValid = [];
+    Object.entries(isError).forEach((val) => {
+      if (val[1].length > 0) {
+        isValid.push("invalid");
       } else {
-        isValid = true;
+        isValid.push("valid");
       }
     });
-    Object.keys(rest).forEach((val) => {
-      if (val === null || val === "" || val > 40) {
-        isValid = false;
-      } else {
-        isValid = true;
-      }
-    });
-    return isValid;
-  };
 
+    Object.entries(rest).forEach((val) => {
+      console.log(val[1]);
+      if (val[1].length > 0) {
+        isValid.push("valid");
+      } else {
+        isValid.push("invalid");
+      }
+    });
+
+    if (isValid.includes("invalid")) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   // ----------------------------------------------------------------
 
   async function addCat(e) {
     e.preventDefault();
 
-    if (
-      values.name != "" &&
-      values.age != 0 &&
-      values.description != "" &&
-      values.phone != "" &&
-      values.image != null &&
-      !formValid(values)
-    ) {
+    if (formValid(values)) {
       try {
         // create a new Parse Object instance
         const Cat = new Parse.Object("Cat");
@@ -126,6 +128,9 @@ export const Post = (props) => {
           value={values.image}
           onChange={formValChange}
         />
+        {values.isError.image.length > 0 && (
+          <span className="invalid-feedback">{values.isError.image}</span>
+        )}
       </span>
       <article className="cat-info">
         <p>
