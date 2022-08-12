@@ -33,12 +33,12 @@
 }
 
 .cat-info #description {
-  min-width: 97%;
+  min-width: 95%;
   min-height: 30%;
   text-align: justify;
   font-size: 20px;
   word-wrap: normal;
-  word-break: break-all;
+  word-break: normal;
 }
 
 .cat-info #contact-number {

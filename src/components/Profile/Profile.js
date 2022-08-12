@@ -2,7 +2,6 @@ import Parse from "parse/dist/parse.min.js";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-
 export const Profile = () => {
   let catQuery = new Parse.Query("Cat");
   const [cats, setCats] = useState([]);
@@ -29,7 +28,7 @@ export const Profile = () => {
     }
   }
 
-console.log(catId);
+  console.log(catId);
   return (
     <div className="profile-container">
       <article className="profile-article">
@@ -37,10 +36,13 @@ console.log(catId);
           Mr/Mrs <i> {currentUser}</i>, this is your profile page
         </h1>
         <p>
-          Here you cans find the "<Link className="post-link" to='/post'>Create</Link>" button, which you can use for
-          uploading adoption posts. Also you can see all the sweet little
-          kittens you and your good heart have decided to post for adoption.
-          Thank you for making the world a better place{" "}
+          Here you cans find the "
+          <Link className="post-link" to="/post">
+            Create
+          </Link>
+          " button, which you can use for uploading adoption posts. Also you can
+          see all the sweet little kittens you and your good heart have decided
+          to post for adoption. Thank you for making the world a better place{" "}
           <strong> &nbsp; ^_^</strong>
         </p>
       </article>
@@ -51,7 +53,7 @@ console.log(catId);
               <img src={catImages[counter++]} alt="Cat Image" />
               <article>
                 <h3>{c}</h3>
-                <Link id="detail-link" to={`/cats/${catId[counter-1]}`}>
+                <Link id="detail-link" to={`/cats/${catId[counter - 1]}`}>
                   Learn more
                 </Link>
               </article>

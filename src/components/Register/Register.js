@@ -32,6 +32,8 @@ export const Register = () => {
         alert(error);
         return false;
       }
+    } else{
+      alert("Username must contain at least 2 letters \n \n Password must be at least 5 characters long");
     }
   };
 

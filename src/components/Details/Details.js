@@ -69,7 +69,7 @@ export const Details = ({ cats }) => {
       <img src={cat.image} alt="Cat for adoption" />
       <article className="cat-info">
         <h2>This is {cat.name}</h2>
-        <p id="age">Age: {cat.age}</p>
+        <p id="age">Age: {cat.age} (years)</p>
         <p id="gender">Gender: {cat.gender}</p>
         <p id="description">{cat.description}</p>
         <p id="contact-number">
