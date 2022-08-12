@@ -16,9 +16,9 @@ import { useEffect, useState } from "react";
 import Parse from "parse/dist/parse.min.js";
 
 // Your Parse initialization configuration goes here
-const PARSE_APPLICATION_ID = "IX6yZeFkMeXKbuP8qiKe5ags3oDLEfiWsfMmMr8L";
+const PARSE_APPLICATION_ID = "nEPle5wmvs4y84gG13Um53XwDshXhFee7neh8sT5";
 const PARSE_HOST_URL = "https://parseapi.back4app.com/";
-const PARSE_JAVASCRIPT_KEY = "f7IDkYZT9OEVUMEVpgryK5WPd1Wt3BJF81QBWe3i";
+const PARSE_JAVASCRIPT_KEY = "GE2kyAiPCIyOmvtecoIwgyuO5oC0ilK1pwc08Xzf";
 Parse.initialize(PARSE_APPLICATION_ID, PARSE_JAVASCRIPT_KEY);
 Parse.serverURL = PARSE_HOST_URL;
 

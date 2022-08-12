@@ -15,7 +15,6 @@ export const Details = ({ cats }) => {
   const [likes = cat.likes, setLikes] = useState(0);
   let hasLiked = false;
 
-  // TODO Maybe try to do it with a query and '.get(id)'
   for (const current of cats) {
     if (current.id == catId) {
       cat = JSON.parse(JSON.stringify(current));

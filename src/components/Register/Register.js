@@ -20,20 +20,19 @@ export const Register = () => {
     const usernameValue = username;
     const passwordValue = password;
 
-    if(usernameValue.length > 1 && passwordValue.length > 4){
-    try {
-      // Since the signUp method returns a Promise, we need to call it using await
-      await Parse.User.signUp(usernameValue, passwordValue)
-        .then(alert(`You have successfully created your acount`))
-        .then(navigate("/", {replace: true}));
-        console.log(Parse.User.current());
-      return true;
-    } catch (error) {
-      // signUp can fail if any parameter is blank or failed an uniqueness check on the server
-      alert(error);
-      return false;
+    if (usernameValue.length > 1 && passwordValue.length > 4) {
+      try {
+        // Since the signUp method returns a Promise, we need to call it using await
+        await Parse.User.signUp(usernameValue, passwordValue);
+        alert(`You have successfully created your acount`);
+        navigate("/", { replace: true });
+        return true;
+      } catch (error) {
+        // signUp can fail if any parameter is blank or failed an uniqueness check on the server
+        alert(error);
+        return false;
+      }
     }
-  }
   };
 
   return (

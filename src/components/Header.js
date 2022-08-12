@@ -7,11 +7,16 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const [currentUser, setCurrentUser] = useState(null);
+  const current = Parse.User.current();
 
   const getCurrentUser = async function () {
     const current = await Parse.User.current();
-    setCurrentUser(current);
-    return currentUser;
+    if (current != null) {
+      setCurrentUser(current);
+      return currentUser;
+    } else {
+      return false;
+    }
   };
 
   const doUserLogout = async function (e) {
@@ -41,7 +46,7 @@ export const Header = () => {
           <NavLink className="nav-link" to="/about">
             About
           </NavLink>
-          {(window.localStorage.length == 1 && (
+          {current === null && (
             <>
               <NavLink className="nav-link" to="/register">
                 Register
@@ -50,12 +55,20 @@ export const Header = () => {
                 Login
               </NavLink>{" "}
             </>
-          )) || (
+          )}{" "}
+          {current != null && (
             <>
               <p className="welcome">
-                Welcome &nbsp; <NavLink className="nav-link" to="/profile">{Parse.User.current().get('username')}</NavLink>
+                Welcome &nbsp;{" "}
+                <NavLink className="nav-link" to="/profile">
+                  {current.get("username")}
+                </NavLink>
               </p>
-              <button className="nav-link" id="logout-btn" onClick={(e) => doUserLogout(e)}>
+              <button
+                className="nav-link"
+                id="logout-btn"
+                onClick={(e) => doUserLogout(e)}
+              >
                 Logout
               </button>
             </>
